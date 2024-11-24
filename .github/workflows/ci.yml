@@ -29,15 +29,15 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
 
-
     - name: Install Chromedriver
       run: |
-        sudo apt-get install -y unzip
-        wget -N https://chromedriver.storage.googleapis.com/116.0.5845.96/chromedriver_linux64.zip
+        sudo apt-get install -y curl unzip
+        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+        CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION})
+        wget -N https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
         sudo unzip chromedriver_linux64.zip -d /usr/local/bin/
         sudo chmod +x /usr/local/bin/chromedriver
 
-    # Este es el nuevo paso para verificar las versiones instaladas
     - name: Verify Chrome and Chromedriver versions
       run: |
         google-chrome --version
@@ -48,3 +48,4 @@ jobs:
 
     - name: Run Selenium Test
       run: node test.js
+
