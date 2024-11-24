@@ -41,12 +41,10 @@ jobs:
 
     - name: Download the correct version of Chromedriver
       run: |
-        CHROME_DRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$chrome_version)
-        echo "Chromedriver version: $CHROME_DRIVER_VERSION"
-        wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/local/bin/
-
+      wget https://chromedriver.storage.googleapis.com/131.0.6778.86/chromedriver_linux64.zip
+      unzip chromedriver_linux64.zip
+      sudo mv chromedriver /usr/local/bin/
+      
     - name: Verify Chrome and Chromedriver versions
       run: |
         google-chrome --version
