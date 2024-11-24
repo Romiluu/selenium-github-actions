@@ -21,7 +21,10 @@ jobs:
       with:
         node-version: 16
 
-    - name: Install Chrome
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Install Google Chrome
       run: |
         sudo apt-get update
         wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -31,11 +34,10 @@ jobs:
 
     - name: Install Chromedriver
       run: |
-        sudo apt-get install -y curl unzip
         # Obtener la versión de Chrome
         CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-        # Obtener la versión de Chromedriver compatible
-        CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+        # Obtener la versión compatible de Chromedriver
+        CHROMEDRIVER_VERSION=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
         echo "Instalando Chromedriver versión: $CHROMEDRIVER_VERSION"
         # Descargar Chromedriver
         wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
@@ -47,9 +49,6 @@ jobs:
       run: |
         google-chrome --version
         chromedriver --version
-
-    - name: Install Dependencies
-      run: npm install
 
     - name: Run Selenium Test
       run: node test.js
