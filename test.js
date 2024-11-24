@@ -1,4 +1,6 @@
 const { Builder, By } = require('selenium-webdriver');
+require('chromedriver'); // Asegúrate de incluir esta línea
+
 const path = require('path');
 
 (async function pruebaHTML() {
